@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,17 +25,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.pokedex.R
 
 import com.example.pokemonapp.ui.theme.bold
 import com.example.pokemonapp.util.Resource
 import com.example.pokemonapp.util.parseStatToAbbr
 import com.example.pokemonapp.util.parseStatToColor
 import com.example.pokemonapp.util.parseTypeToColor
+import com.fyp.pokedex.R
 import java.util.*
 
 @Composable
-fun DetailScreen(
+fun detailScreen(
     navController: NavHostController,
     dominantColor: Color,
     pokemonName: String,
@@ -55,7 +54,7 @@ fun DetailScreen(
             .background(MaterialTheme.colors.background)
 
     ) {
-        PokemonDetailTopSection(
+        pokemonDetailTopSection(
             navController = navController,
             dominantColor = dominantColor,
             modifier = Modifier
@@ -63,7 +62,7 @@ fun DetailScreen(
                 .align(Alignment.TopCenter),
             pokemonInfo = pokemonInfo,
         )
-        PokemonDetailStateWrapper(
+        pokemonDetailStateWrapper(
             pokemonInfo = pokemonInfo,
             modifier = Modifier
                 .padding(
@@ -86,7 +85,7 @@ fun DetailScreen(
 }
 
 @Composable
-fun PokemonDetailTopSection(
+fun pokemonDetailTopSection(
     navController: NavHostController,
     dominantColor: Color,
     pokemonInfo: Resource<com.example.pokemonapp.domain.dtos.pokemon.Pokemon>,
@@ -117,7 +116,7 @@ fun PokemonDetailTopSection(
             pokemonInfo.data?.sprites?.let {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(it.front_default)
+                        .data(it.frontDefault)
                         .size(600)
                         .crossfade(true)
                         .build(),
@@ -133,14 +132,14 @@ fun PokemonDetailTopSection(
 }
 
 @Composable
-fun PokemonDetailStateWrapper(
+fun pokemonDetailStateWrapper(
     pokemonInfo: Resource<com.example.pokemonapp.domain.dtos.pokemon.Pokemon>,
     modifier: Modifier = Modifier,
     loadingModifier: Modifier = Modifier
 ) {
     when (pokemonInfo) {
         is Resource.Success -> {
-            PokemonDetail(
+            pokemonDetail(
                 pokemonInfo = pokemonInfo.data!!,
                 modifier = modifier
             )
@@ -164,7 +163,7 @@ fun PokemonDetailStateWrapper(
 }
 
 @Composable
-fun PokemonDetail(
+fun pokemonDetail(
     pokemonInfo: com.example.pokemonapp.domain.dtos.pokemon.Pokemon,
     modifier: Modifier = Modifier
 ) {
@@ -180,15 +179,15 @@ fun PokemonDetail(
             letterSpacing = 1.sp,
             fontFamily = bold,
         )
-        PokemonType(types = pokemonInfo.types)
+        pokemonType(types = pokemonInfo.types)
 
-        PokemonDetailDataSection(
+        pokemonDetailDataSection(
             pokemonWeight = pokemonInfo.weight,
             pokemonHeight = pokemonInfo.height
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        PokemonBaseStats(pokemonInfo = pokemonInfo)
+        pokemonBaseStats(pokemonInfo = pokemonInfo)
 
     }
 
@@ -196,7 +195,7 @@ fun PokemonDetail(
 
 
 @Composable
-fun PokemonType(types: List<com.example.pokemonapp.domain.dtos.pokemon.Type>) {
+fun pokemonType(types: List<com.example.pokemonapp.domain.dtos.pokemon.Type>) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(16.dp),
@@ -225,7 +224,7 @@ fun PokemonType(types: List<com.example.pokemonapp.domain.dtos.pokemon.Type>) {
 }
 
 @Composable
-fun PokemonDetailDataSection(
+fun pokemonDetailDataSection(
     pokemonWeight: Int,
     pokemonHeight: Int,
     sectionHeight: Dp = 80.dp
@@ -236,7 +235,7 @@ fun PokemonDetailDataSection(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        PokemonDetailDataItem(
+        pokemonDetailDataItem(
             dataValue = pokemonWeightInKg,
             dataUnit = "kg",
             dataIcon = painterResource(id = R.drawable.ic_weight),
@@ -247,7 +246,7 @@ fun PokemonDetailDataSection(
                 .size(1.dp, sectionHeight)
                 .background(Color.LightGray)
         )
-        PokemonDetailDataItem(
+        pokemonDetailDataItem(
             dataValue = pokemonHeightInMeters,
             dataUnit = "m",
             dataIcon = painterResource(id = R.drawable.ic_height),
@@ -257,7 +256,7 @@ fun PokemonDetailDataSection(
 }
 
 @Composable
-fun PokemonDetailDataItem(
+fun pokemonDetailDataItem(
     dataValue: Float,
     dataUnit: String,
     dataIcon: Painter,
@@ -279,7 +278,7 @@ fun PokemonDetailDataItem(
 }
 
 @Composable
-fun PokemonStat(
+fun pokemonStat(
     statName: String,
     statValue: Int,
     statMaxValue: Int,
@@ -323,11 +322,11 @@ fun PokemonStat(
 }
 
 @Composable
-fun PokemonBaseStats(
+fun pokemonBaseStats(
     pokemonInfo: com.example.pokemonapp.domain.dtos.pokemon.Pokemon,
 ) {
     val maxBaseStat = remember {
-        pokemonInfo.stats.maxOf { it.base_stat }
+        pokemonInfo.stats.maxOf { it.baseStat }
     }
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -340,9 +339,9 @@ fun PokemonBaseStats(
         Spacer(modifier = Modifier.height(16.dp))
         for (i in pokemonInfo.stats.indices) {
             val stat = pokemonInfo.stats[i]
-            PokemonStat(
+            pokemonStat(
                 statName = parseStatToAbbr(stat),
-                statValue = stat.base_stat,
+                statValue = stat.baseStat,
                 statMaxValue = maxBaseStat,
                 statColor = parseStatToColor(stat),
             )
@@ -351,8 +350,8 @@ fun PokemonBaseStats(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun Preview() {
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun Preview() {
+//}
 

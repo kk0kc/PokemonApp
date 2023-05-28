@@ -9,8 +9,8 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.pokemonapp.navigation.RootNavGraph
-import com.example.pokemonapp.ui.theme.PokedexTheme
+import com.example.pokemonapp.navigation.rootNavGraph
+import com.example.pokemonapp.ui.theme.pokedexTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,13 +19,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PokedexTheme {
+            pokedexTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
                     navController = rememberNavController()
-                    RootNavGraph(navController)
+                    rootNavGraph(navController)
                 }
             }
         }

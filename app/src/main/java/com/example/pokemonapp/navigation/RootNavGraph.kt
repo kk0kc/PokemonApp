@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 
 @Composable
-fun RootNavGraph(navController: NavHostController) {
+fun rootNavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Graph.Main) {
         mainNavGraph(navController)
     }

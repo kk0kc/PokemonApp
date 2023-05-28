@@ -4,15 +4,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.example.pokemonapp.presentation.DetailScreen
-import com.example.pokemonapp.presentation.HomeScreen
+import com.example.pokemonapp.presentation.detailScreen
+import com.example.pokemonapp.presentation.homeScreen
 
 fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     navigation(
         route = Graph.Main,
         startDestination = Screen.Home.route
     ) {
-        composable(route = Screen.Home.route) { HomeScreen(navController) }
+        composable(route = Screen.Home.route) { homeScreen(navController) }
         composable(
             route = Screen.Detail.route + "/{dominantColor}" + "/{name}",
             arguments = listOf(
@@ -26,7 +26,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                 color?.let { resColor -> Color(resColor) } ?: Color.White
             }
             val name = entry.arguments?.getString("name") ?: "Poke"
-            DetailScreen(navController, dominantColor, name)
+            detailScreen(navController, dominantColor, name)
         }
     }
 }

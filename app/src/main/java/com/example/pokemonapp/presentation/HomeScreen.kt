@@ -29,14 +29,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.pokedex.R
 
 import com.example.pokemonapp.domain.dtos.pokemonList.PokedexListEntry
 import com.example.pokemonapp.navigation.Screen
 import com.example.pokemonapp.ui.theme.bold
+import com.fyp.pokedex.R
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun homeScreen(navController: NavHostController) {
     val viewModel = hiltViewModel<HomeScreenViewModel>()
     Surface(
         modifier = Modifier
@@ -59,7 +59,7 @@ fun HomeScreen(navController: NavHostController) {
                     .fillMaxWidth()
                     .align(CenterHorizontally)
             )
-            PokemonList(navController)
+            pokemonList(navController)
         }
 
     }
@@ -67,7 +67,7 @@ fun HomeScreen(navController: NavHostController) {
 
 
 @Composable
-fun PokemonList(
+fun pokemonList(
     navController: NavHostController,
     viewModel: HomeScreenViewModel = hiltViewModel(),
 ) {
@@ -84,7 +84,7 @@ fun PokemonList(
     ) {
         val itemCount = data.size
         items(itemCount) { index ->
-            PokemonItem(entry = data[index], navController = navController)
+            pokemonItem(entry = data[index], navController = navController)
             if (index >= itemCount - 1 && !endReached && !isLoading) {
                 viewModel.getPokemonList()
             }
@@ -99,7 +99,7 @@ fun PokemonList(
             CircularProgressIndicator(color = MaterialTheme.colors.primary)
         }
         if (loadError.isNotEmpty()) {
-            RetrySection(error = loadError) {
+            retrySection(error = loadError) {
                 viewModel.getPokemonList()
             }
         }
@@ -108,7 +108,7 @@ fun PokemonList(
 }
 
 @Composable
-fun RetrySection(
+fun retrySection(
     error: String,
     onRetry: () -> Unit
 ) {
@@ -125,15 +125,13 @@ fun RetrySection(
 }
 
 @Composable
-fun PokemonItem(
+fun pokemonItem(
     entry: PokedexListEntry,
     navController: NavHostController,
     viewModel: HomeScreenViewModel = hiltViewModel()
 ) {
     val defaultDominantColor = MaterialTheme.colors.background
     var dominantColor by remember { mutableStateOf(defaultDominantColor) }
-
-
     Card(
         elevation = 0.dp,
         backgroundColor = MaterialTheme.colors.background
@@ -163,9 +161,7 @@ fun PokemonItem(
                 contentDescription = null,
                 onSuccess = { success ->
                     val drawable = success.result.drawable
-                    viewModel.calculateDominateColor(drawable) { color ->
-                        dominantColor = color
-                    }
+                    viewModel.calculateDominateColor(drawable) { color -> dominantColor = color }
                 }
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -186,8 +182,8 @@ fun PokemonItem(
 
 @Preview(showBackground = true)
 @Composable
-fun PokemonItemPreview() {
-    PokemonItem(
+fun pokemonItemPreview() {
+    pokemonItem(
         entry = PokedexListEntry("moo", "", 1),
         navController = rememberNavController()
     )

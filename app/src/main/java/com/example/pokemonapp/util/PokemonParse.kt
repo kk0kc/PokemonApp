@@ -1,7 +1,30 @@
 package com.example.pokemonapp.util
 
 import androidx.compose.ui.graphics.Color
-import com.example.pokemonapp.ui.theme.*
+import com.example.pokemonapp.ui.theme.AtkColor
+import com.example.pokemonapp.ui.theme.DefColor
+import com.example.pokemonapp.ui.theme.HPColor
+import com.example.pokemonapp.ui.theme.SpAtkColor
+import com.example.pokemonapp.ui.theme.SpDefColor
+import com.example.pokemonapp.ui.theme.SpdColor
+import com.example.pokemonapp.ui.theme.TypeBug
+import com.example.pokemonapp.ui.theme.TypeDark
+import com.example.pokemonapp.ui.theme.TypeDragon
+import com.example.pokemonapp.ui.theme.TypeElectric
+import com.example.pokemonapp.ui.theme.TypeFairy
+import com.example.pokemonapp.ui.theme.TypeFighting
+import com.example.pokemonapp.ui.theme.TypeFire
+import com.example.pokemonapp.ui.theme.TypeFlying
+import com.example.pokemonapp.ui.theme.TypeGhost
+import com.example.pokemonapp.ui.theme.TypeGrass
+import com.example.pokemonapp.ui.theme.TypeGround
+import com.example.pokemonapp.ui.theme.TypeIce
+import com.example.pokemonapp.ui.theme.TypeNormal
+import com.example.pokemonapp.ui.theme.TypePoison
+import com.example.pokemonapp.ui.theme.TypePsychic
+import com.example.pokemonapp.ui.theme.TypeRock
+import com.example.pokemonapp.ui.theme.TypeSteel
+import com.example.pokemonapp.ui.theme.TypeWater
 import java.util.*
 
 fun parseTypeToColor(type: com.example.pokemonapp.domain.dtos.pokemon.Type): Color {
